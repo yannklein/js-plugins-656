@@ -1,32 +1,30 @@
-const input = document.querySelector("#keyword");
-const search = document.querySelector("#submit");
-const results = document.querySelector("#results");
+// imports
+import { fetchMovies, searchMovies } from "./movies";
+import initSortable from "./plugins/init_sortable";
+import { Application } from "stimulus"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
 
-search.addEventListener("click", (event) => {
-  event.preventDefault();
-  const url = `https://www.omdbapi.com/?s=${input.value}&apikey=adf1f2d7`;
-  fetch(url)
-  .then(response => response.json())
-  .then((data) => {
-    const movies = data.Search;
-    results.innerHTML = "";
-    movies.forEach((movie) => {
-      results.insertAdjacentHTML(
-        "beforeend", 
-        `<li class='list-inline-item'>
-          <img src="${movie.Poster}" alt="poster" />
-          <p>${movie.Title}</p>
-        </li>`);
-    });
-  });
-});
+// init for Stimulus
+const application = Application.start()
+const context = require.context("./controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))
+
+// Element selections
+const search = document.querySelector("#submit");
+
+// Function calls
+fetchMovies("matrix");
+initSortable();
+
+// Event listeners
+search.addEventListener("click", searchMovies);
 
 
 // //////////////////////
 // Rehearsal
 // //////////////////////
 
-// 1. Select the button
+// // 1. Select the button
 // const button = document.querySelector("#click-me");
 
 // // 2. Listen to a click
@@ -37,3 +35,4 @@ search.addEventListener("click", (event) => {
 //   event.currentTarget.disabled = true;
 //   event.currentTarget.innerText = "Loading...";
 // });
+

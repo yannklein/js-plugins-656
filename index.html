@@ -13,7 +13,10 @@
     <div class="container text-center mt-5">
       <h1> Let's AJAX! ⚔︎</h1>
       
-      <button id="click-me" class="btn btn-primary btn-lg m-5">Click me!</button>
+      <div data-controller="disable-button">
+        <button data-disable-button-target="clickBtn" data-action="click->disable-button#disable" id="click-me" class="btn btn-primary btn-lg m-5">Click me!</button>
+        <button data-disable-button-target="resetBtn" data-action="click->disable-button#reset" class="btn btn-outline-primary d-none">Reset</button>
+      </div>
       
       <form id="search-movies" class="form-inline d-flex justify-content-center m-5">
         <input id="keyword" type="text" class="form-control" placeholder="Find movies">
